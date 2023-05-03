@@ -10,6 +10,8 @@ class FractionTest {
     @Test
     void validFraction() {
         Fraction sut = new Fraction(1, 1);
+        assertThat(sut.getNumerator()).isEqualTo(1);
+        assertThat(sut.getDenominator()).isEqualTo(1);
     }
 
     @Test

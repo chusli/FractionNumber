@@ -8,6 +8,14 @@ public class Fraction {
     private int numerator;
     private int denominator;
 
+    public int getNumerator() {
+        return numerator;
+    }
+
+    public int getDenominator() {
+        return denominator;
+    }
+
     public Fraction(int numerator, int denominator) {
         if (denominator == 0) {
             throw new IllegalArgumentException("denominator must not be equal to 0 (zero)");
