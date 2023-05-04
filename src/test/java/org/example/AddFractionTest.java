@@ -7,23 +7,23 @@ class AddFractionTest {
 
     @Test
     void zeroPlusZero() {
-        Integer sum = new Fraction(0).plus(new Fraction(0));
+        Fraction sum = new Fraction(0).plus(new Fraction(0));
 
-        Assertions.assertThat(sum).isZero();
+        Assertions.assertThat(sum).isEqualTo(new Fraction(0));
     }
 
     @Test
     void nonZeroPlusZero() {
-        Integer sum = new Fraction(2).plus(new Fraction(0));
+        Fraction sum = new Fraction(2).plus(new Fraction(0));
 
-        Assertions.assertThat(sum).isEqualTo(2);
+        Assertions.assertThat(sum).isEqualTo(new Fraction(2));
     }
 
     @Test
     void nonZeroPlusNonZero() {
-        Integer sum = new Fraction(2).plus(new Fraction(8));
+        Fraction sum = new Fraction(2).plus(new Fraction(8));
 
-        Assertions.assertThat(sum).isEqualTo(10);
+        Assertions.assertThat(sum).isEqualTo(new Fraction(10));
     }
 
 }
