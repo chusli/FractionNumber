@@ -46,6 +46,17 @@ public class SellOneItemTests {
     }
 
     @Test
+    void otherUnknownBarcode() {
+        sale = new Sale();
+        display = new Display(sale);
+
+        sale.onBarcode("11");
+        String actual = display.getText();
+
+        assertThat(actual).isEqualTo("Unknown product: 11");
+    }
+
+    @Test
     void nullBarcode() {
         sale = new Sale();
         display = new Display(sale);
@@ -67,19 +78,28 @@ public class SellOneItemTests {
         assertThat(actual).isEqualTo("Invalid input :-(");
     }
 
+    @Test
+    void noBarcode() {
+        sale = new Sale();
+        display = new Display(sale);
+
+        String actual = display.getText();
+
+        assertThat(actual).isEqualTo("Invalid input :-(");
+    }
+
     private static class Sale {
-        private String price;
+        private String price = "Invalid input :-(";
 
         public void onBarcode(String barcode) {
             if (isValidBarcode(barcode)) {
-                price = "Invalid input :-(";
                 return;
             }
             Map<String, String> productRegister = new HashMap<>();
             productRegister.put("324452", "CHF 99.95");
             productRegister.put("124981", "CHF 56.55");
-
-            price = productRegister.getOrDefault(barcode, "Unknown product: 9999");
+            String defaultUnknownProduct = String.format("Unknown product: %s", barcode);
+            price = productRegister.getOrDefault(barcode, defaultUnknownProduct);
         }
 
         private boolean isValidBarcode(String barcode) {
