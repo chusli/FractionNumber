@@ -2,6 +2,9 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SellOneItemTests {
@@ -11,7 +14,7 @@ public class SellOneItemTests {
 
     @Test
     void barcodeKnown() {
-        sale = new Sale("124981");
+        sale = new Sale();
         display = new Display(sale);
 
         sale.onBarcode("124981");
@@ -22,7 +25,7 @@ public class SellOneItemTests {
 
     @Test
     void anotherBarcodeKnown() {
-        sale = new Sale("324452");
+        sale = new Sale();
         display = new Display(sale);
 
         sale.onBarcode("324452");
@@ -42,30 +45,51 @@ public class SellOneItemTests {
         assertThat(actual).isEqualTo("Unknown product: 9999");
     }
 
+    @Test
+    void nullBarcode() {
+        sale = new Sale();
+        display = new Display(sale);
+
+        sale.onBarcode(null);
+        String actual = display.getText();
+
+        assertThat(actual).isEqualTo("Invalid input :-(");
+    }
+
+    @Test
+    void emptyBarcode() {
+        sale = new Sale();
+        display = new Display(sale);
+
+        sale.onBarcode("");
+        String actual = display.getText();
+
+        assertThat(actual).isEqualTo("Invalid input :-(");
+    }
+
     private static class Sale {
-        private String barcode;
         private String price;
 
-        Sale(String barcode){
-            this.barcode = barcode;
-        }
-        Sale(){
+        public void onBarcode(String barcode) {
+            if (isValidBarcode(barcode)) {
+                price = "Invalid input :-(";
+                return;
+            }
+            Map<String, String> productRegister = new HashMap<>();
+            productRegister.put("324452", "CHF 99.95");
+            productRegister.put("124981", "CHF 56.55");
+
+            price = productRegister.getOrDefault(barcode, "Unknown product: 9999");
         }
 
-        public void onBarcode(String barcode) {
-            if ("324452".equals(barcode)) {
-                price = "CHF 99.95";
-            } else if ("124981".equals(barcode)) {
-                price = "CHF 56.55";
-            } else {
-                price = "Unknown product: 9999";
-            }
+        private boolean isValidBarcode(String barcode) {
+            return barcode == null || barcode.isBlank();
         }
     }
 
-    private class Display {
+    private static class Display {
 
-        private Sale sale;
+        private final Sale sale;
 
         public Display(Sale sale) {
             this.sale = sale;
