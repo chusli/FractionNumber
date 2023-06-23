@@ -13,7 +13,7 @@ public class Fraction {
 
     public Fraction(int numerator, int denominator) {
         this.numerator = numerator;
-        this.denominator = denominator;
+        this.denominator = numerator == 0 ? 1 : denominator;
     }
 
     public Fraction plus(Fraction that) {

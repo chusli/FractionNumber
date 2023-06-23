@@ -19,6 +19,7 @@ class AddFractionTest {
                 Arguments.of(2, 6, "1/3"),
                 Arguments.of(15, 45, "1/3"),
                 Arguments.of(20, 88, "5/22"),
+                Arguments.of(9, 8, "9/8"),
                 Arguments.of(0, 20, "0/1")
         );
     }
@@ -64,6 +65,12 @@ class AddFractionTest {
     void twoThirdsPlusTwoSixthsEqualsOne() {
         assertThat(new Fraction(2, 3).plus(new Fraction(2, 6)))
                 .isEqualTo(new Fraction(1));
+    }
+
+    @Test
+    void oneHalfPlusFiveEigthsEqualsNineEigths() {
+        assertThat(new Fraction(1, 2).plus(new Fraction(5, 8)))
+                .isEqualTo(new Fraction(9, 8));
     }
 
     @ParameterizedTest
