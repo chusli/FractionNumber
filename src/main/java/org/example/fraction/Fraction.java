@@ -17,7 +17,10 @@ public class Fraction {
     }
 
     public Fraction plus(Fraction that) {
-        return new Fraction(numerator + that.numerator);
+        var newDenominator = denominator * that.denominator;
+        var newNumerator = numerator * that.denominator + denominator * that.numerator;
+
+        return new Fraction(newNumerator, newDenominator);
     }
 
     @Override
@@ -41,5 +44,19 @@ public class Fraction {
     @Override
     public String toString() {
         return numerator + "/" + denominator;
+    }
+
+
+    public String display() {
+        int _numerator = numerator;
+        int _denominator = denominator;
+        int lcd = LCD.of(numerator, denominator);
+        do {
+            _numerator /= lcd;
+            _denominator /= lcd;
+            lcd = LCD.of(_numerator, _denominator);
+        } while (lcd > 1);
+
+        return _numerator + "/" + _denominator;
     }
 }
