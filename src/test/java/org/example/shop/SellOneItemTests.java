@@ -1,4 +1,4 @@
-package org.example;
+package org.example.shop;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -141,7 +141,7 @@ public class SellOneItemTests {
         Map<String, String> catalog;
 
         public Catalog(Map<String, String> prices) {
-            this.catalog = prices;
+            catalog = prices;
         }
 
         public String findFormattedPrice(String barcode) {
