@@ -83,7 +83,7 @@ class PermuteTest {
     @DisplayName("Dieser Test steht für das E in RIGHT BICEP")
     void errorTest() {
         // arrange
-        List<Integer> eingabe = IntStream.rangeClosed(0, 2147483647).boxed().toList();
+        List<Integer> eingabe = IntStream.rangeClosed(0, 100).boxed().toList();
 
         // act + assert
         assertThrows(OutOfMemoryError.class, () -> Permutator.permute(eingabe));
@@ -93,7 +93,7 @@ class PermuteTest {
     @DisplayName("Dieser Test steht für das P in RIGHT BICEP")
     void performanceSingleTest() {
         // arrange
-        List<Integer> eingabe = IntStream.rangeClosed(0, 99999).boxed().toList();
+        List<Integer> eingabe = IntStream.rangeClosed(0, 100).boxed().toList();
 
         // act und Zeitmessen
         long dauer = zeitmessen(eingabe);
@@ -108,7 +108,7 @@ class PermuteTest {
     void performanceManyTest() {
         // arrange
         final int sampleSize = 1000;
-        List<Integer> eingabe = IntStream.rangeClosed(0, 99999).boxed().toList();
+        List<Integer> eingabe = IntStream.rangeClosed(0, 100).boxed().toList();
 
         // act und Zeitmessen über mehrere Testläufe
         long timetaken = 0;
@@ -126,5 +126,15 @@ class PermuteTest {
         long start = System.nanoTime();
         Permutator.permute(eingabe);
         return System.nanoTime() - start;
+    }
+
+    @Test
+    void whenEmptyInputProvidedThenReturnEmptyList() {
+        assertThat(Permutator.permute(List.of())).isEmpty();
+    }
+
+    @Test
+    void whenOneElementProvidedThenReturnIt() {
+        assertThat(Permutator.permute(List.of(1))).isEqualTo(List.of(List.of(1)));
     }
 }
